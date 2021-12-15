@@ -134,8 +134,8 @@
     "prefix": "impl",
     "body": [
       "impl ${1:type} {",
-      "\tfn new($0) -> ${1:type} {",
-      "\t\t${1:type}{}",
+      "\tfn new($0) -> Self {",
+      "\t\tSelf {}",
       "\t}",
       "}"
     ],
@@ -144,7 +144,7 @@
   "fn": {
     "prefix": "fn",
     "body": [
-      "fn ${2:name}($0) -> i32 {",
+      "fn ${1:name}(${2:args})${3:->Result<${4:i32}>}{",
       "\t1",
       "}",
     ],
@@ -153,7 +153,7 @@
   "method": {
     "prefix": "fn_met",
     "body": [
-      "fn ${1:name}(${2:&self}, $0) -> i32 {",
+      "fn ${1:name}(${2:&self},$3)${4:->${5:Result<i32>}}{",
       "\t1",
       "}",
     ],
@@ -162,7 +162,7 @@
   "async_fn": {
     "prefix": "async",
     "body": [
-      "async fn ${1:name}($0) -> std::io::Result<i32, futures::future::err> {",
+      "async fn ${1:name}(${2:args})${3:->Result<${4:i32}>}{",
       "\tOk(1)",
       "}",
     ],
@@ -203,5 +203,16 @@
       "}",
     ],
     "description": "test fn decl"
+  },
+  "attribute": {
+    // https://doc.rust-lang.org/reference/attributes.html
+    "prefix": "attr",
+    "body": "#${1:!}[${2|allow,cfg,cfg_attr,dead_code,deny,derive,forbid,macro_use,test,warn|}$0]",
+    "description": "WIP attributes"
+  },
+  "derive_known": {
+    "prefix": "derive_known",
+    "body": "#${1:!}[derive(${2|Clone,Copy,Default,Debug,Eq,Hash,Ord,PartialEq,PartialOrd|})]",
+    "description": "can derive known traits"
   },
 }
